@@ -3,7 +3,9 @@ import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:my_game/game/game.dart';
+import 'package:my_game/gen/assets.gen.dart';
 import 'package:my_game/l10n/l10n.dart';
 
 class MyGame extends FlameGame {
@@ -29,6 +31,7 @@ class MyGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
+    await images.loadAllImages();
     final world = World(
       children: [
         Unicorn(position: size / 2),

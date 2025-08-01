@@ -1,32 +1,63 @@
+import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_repository/game_repository.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_game/hero_selection/hero_selection.dart';
 import 'package:my_game/l10n/l10n.dart';
 import 'package:my_game/loading/loading.dart';
+import 'package:nes_ui/nes_ui.dart';
+import 'package:statistics_repository/statistics_repository.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App(this.gameRepository, this.statisticsRepository, {super.key});
+  final GameRepository gameRepository;
+  final StatisticsRepository statisticsRepository;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create:
-              (_) =>
-                  PreloadCubit(Images(prefix: ''), AudioCache(prefix: ''))
-                    ..loadSequentially(),
+          create: (_) => PreloadCubit(
+            Images(prefix: 'assets/images'),
+            AudioCache(prefix: ''),
+          )..loadSequentially(),
         ),
+
+        RepositoryProvider.value(value: gameRepository),
+        RepositoryProvider.value(value: statisticsRepository),
       ],
-      child: const AppView(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: flutterNesTheme(brightness: Brightness.light),
+        home: const HeroSelectionScreen(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MultiBlocProvider(
+  //     providers: [
+  //       BlocProvider(
+  //         create: (_) =>
+  //             PreloadCubit(Images(prefix: ''), AudioCache(prefix: ''))
+  //               ..loadSequentially(),
+  //       ),
+  //     ],
+  //     child: const _old_AppView(),
+  //   );
+  // }
 }
 
-class AppView extends StatelessWidget {
-  const AppView({super.key});
+class _old_AppView extends StatelessWidget {
+  const _old_AppView({super.key});
 
   @override
   Widget build(BuildContext context) {
