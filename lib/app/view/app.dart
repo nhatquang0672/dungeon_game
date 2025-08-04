@@ -23,18 +23,17 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => PreloadCubit(
-            Images(prefix: 'assets/images'),
+            Images(prefix: ''),
             AudioCache(prefix: ''),
           )..loadSequentially(),
         ),
-
         RepositoryProvider.value(value: gameRepository),
         RepositoryProvider.value(value: statisticsRepository),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: flutterNesTheme(brightness: Brightness.light),
-        home: const HeroSelectionScreen(),
+        home: const LoadingPage(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
       ),

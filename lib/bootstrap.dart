@@ -28,8 +28,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   WidgetsFlutterBinding.ensureInitialized();
-  // await Flame.device.fullScreen();
-  // await Flame.device.setLandscape();
+  await Flame.device.fullScreen();
+  await Flame.device.setLandscape();
 
   Bloc.observer = AppBlocObserver();
 

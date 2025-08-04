@@ -7,7 +7,7 @@ class GameRepository {
   /// {@macro game_repository}
   const GameRepository();
   Future<DungeonChallenges> loadChallenges() async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
     return DungeonChallenges.mockChallenges;
   }
 

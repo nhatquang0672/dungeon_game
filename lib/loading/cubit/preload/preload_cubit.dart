@@ -22,7 +22,10 @@ class PreloadCubit extends Cubit<PreloadState> {
       ),
       PreloadPhase(
         'images',
-        () => images.loadAll([Assets.images.unicornAnimation.path]),
+        () => images.loadAll([
+          Assets.images.unicornAnimation.path,
+          Assets.images.characters.conferenceWoman.path,
+        ]),
       ),
     ];
 
@@ -36,6 +39,7 @@ class PreloadCubit extends Cubit<PreloadState> {
       ]);
       emit(state.copyWith(loadedCount: state.loadedCount + 1));
     }
+    print('load all assets');
   }
 }
 

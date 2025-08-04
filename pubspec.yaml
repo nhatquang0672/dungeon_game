@@ -25,6 +25,7 @@ dependencies:
     path: packages/game_repository
   statistics_repository:
     path: packages/statistics_repository
+  flame_tiled: ^3.0.5
 
 dev_dependencies:
   bloc_test: ^10.0.0
@@ -40,9 +41,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/audio/
-    - assets/images/
+    - assets/images/unicorn_animation.png
     - assets/images/modern_office/
     - assets/images/characters/
-    # - assets/licenses/modern_office/
     - assets/licenses/poppins/
     - assets/tiles/

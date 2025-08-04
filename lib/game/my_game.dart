@@ -31,7 +31,6 @@ class MyGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    await images.loadAllImages();
     final world = World(
       children: [
         Unicorn(position: size / 2),

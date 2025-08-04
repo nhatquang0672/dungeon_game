@@ -3,6 +3,8 @@ import 'package:flame/game.dart' hide Route;
 import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_game/game/continue_propgating.dart';
+import 'package:my_game/game/dungeon_game.dart';
 import 'package:my_game/game/game.dart';
 import 'package:my_game/gen/assets.gen.dart';
 import 'package:my_game/l10n/l10n.dart';
@@ -63,18 +65,16 @@ class _GameViewState extends State<GameView> {
       context,
     ).textTheme.bodySmall!.copyWith(color: Colors.white, fontSize: 4);
 
-    _game ??=
-        widget.game ??
-        MyGame(
-          l10n: context.l10n,
-          effectPlayer: context.read<AudioCubit>().effectPlayer,
-          textStyle: textStyle,
-          images: context.read<PreloadCubit>().images,
-        );
+    _game ??= widget.game ?? DungeonGame();
+    // MyGame(
+    //   l10n: context.l10n,
+    //   effectPlayer: context.read<AudioCubit>().effectPlayer,
+    //   textStyle: textStyle,
+    //   images: context.read<PreloadCubit>().images,
+    // );
     return Stack(
       children: [
-        // Positioned.fill(child: GameWidget(game: _game!)),
-        Center(child: GameWidget(game: _game!)),
+        Positioned.fill(child: GameWidget(game: _game!)),
         Align(
           alignment: Alignment.topRight,
           child: BlocBuilder<AudioCubit, AudioState>(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_repository/game_repository.dart';
 import 'package:my_game/game/view/game_page.dart';
 import 'package:my_game/hero_creation/hero_creation.dart';
+import 'package:my_game/loading/loading.dart';
 import 'package:my_game/hero_selection/bloc/hero_selection_bloc.dart';
 import 'package:my_game/l10n/l10n.dart';
 import 'package:nes_ui/nes_ui.dart';
@@ -11,6 +12,14 @@ import 'package:statistics_repository/statistics_repository.dart';
 
 class HeroSelectionScreen extends StatelessWidget {
   const HeroSelectionScreen({super.key});
+
+  static Route<void> route() {
+    return NesFillTransition.route<void>(
+      pageBuilder: (_, __, ___) {
+        return const HeroSelectionScreen();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +49,6 @@ class _HeroSelectionScreen extends StatelessWidget {
           },
           listener: (context, state) {
             if (state is LoadGameSuccess) {
-              print('co vao day ko ');
-
               Navigator.of(
                 context,
               ).push(GamePage.route());

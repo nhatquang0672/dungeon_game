@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_game/hero_selection/views/views.dart';
 import 'package:my_game/l10n/l10n.dart';
 import 'package:my_game/loading/loading.dart';
 import 'package:my_game/title/title.dart';
@@ -18,7 +19,7 @@ class _LoadingPageState extends State<LoadingPage> {
     if (!mounted) {
       return;
     }
-    await navigator.pushReplacement<void, void>(TitlePage.route());
+    await navigator.pushReplacement<void, void>(HeroSelectionScreen.route());
   }
 
   @override
