@@ -29,7 +29,7 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^10.0.0
-  flame_test: ^1.19.2
+  flame_test: ^2.0.1
   flutter_test:
     sdk: flutter
   mockingjay: ^2.0.0
