@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:my_game/game/components/hero/behaviors/new_tap_moving_behavior.dart';
-import 'package:my_game/game/components/hero/behaviors/tap_moving_behavior.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 import 'package:my_game/game/dungeon_game.dart';
 
@@ -24,13 +22,13 @@ enum PlayerOrientation {
   final int row;
 }
 
-class Hero extends SpriteAnimationGroupComponent<PlayerOrientation>
+class MainHero extends SpriteAnimationGroupComponent<PlayerOrientation>
     with HasGameRef<DungeonGame>, EntityMixin {
-  Hero({
+  MainHero({
     required this.character,
     // required this.collider,
     required Vector2 position,
-    required this.continuePropagation,
+    // required this.continuePropagation,
     required super.size,
   }) : super(
          position: position,
@@ -55,10 +53,16 @@ class Hero extends SpriteAnimationGroupComponent<PlayerOrientation>
     });
   }
 
+  @override
+  void onMount() {
+    super.onMount();
+    print('Hero actual position on mount: $position');
+  }
+
   // final PlayerCollider collider;
 
   final String character;
-  final bool continuePropagation;
+  // final bool continuePropagation;
 
   late final SpriteAnimation _rightOrientationAnimation;
   late final SpriteAnimation _idleRightOrientationAnimation;
@@ -77,12 +81,6 @@ class Hero extends SpriteAnimationGroupComponent<PlayerOrientation>
     _loadPlayerAnimations();
     return super.onLoad();
   }
-
-  // @override
-  // void onTapDown(TapDownEvent event) {
-  //   // TODO: implement onTapDown
-  //   print('hero' + event.toString());
-  // }
 
   void _loadPlayerAnimations() {
     final image = game.images.fromCache('characters/$character.png');
@@ -148,17 +146,9 @@ class Hero extends SpriteAnimationGroupComponent<PlayerOrientation>
     );
   }
 
-  // @override
-  // void onTapDown(TapDownEvent event) {
-  //   // TODO: implement onTapDown
-  //   print('hero: ' + event.toString());
-  // }
-
   void handleWorldTap(Vector2 tapPosition) {
     // Move or act based on tap
     print('Hero received tap at $tapPosition');
-
     findBehavior<NewTapMovingBehavior>()?.onKeyEvent(tapPosition);
-    // e.g., moveTo(tapPosition);
   }
 }

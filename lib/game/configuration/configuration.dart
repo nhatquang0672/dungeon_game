@@ -23,5 +23,5 @@ const escapeRoomTickDuration = Duration(seconds: 1);
 const escapeRoomTicks = 120;
 const escapeRoomMaxWrongAnswersAllowed = 3;
 const escapeRoomNumberOfPuzzles = 3;
-final Vector2 tileSize = Vector2.all(16);
+final Vector2 tileSize = Vector2.all(32);
 const escapeRoomNumberOfHintsAllowed = 2;

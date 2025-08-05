@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/image_composition.dart';
 import 'package:my_game/game/components/dungeon_world.dart';
+import 'package:my_game/game/components/hero/hero.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 
 class DungeonGame extends FlameGame {
@@ -18,26 +19,28 @@ class DungeonGame extends FlameGame {
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
     cam = CameraComponent.withFixedResolution(
-      width: gameHeight,
+      width: gameWidth,
       height: gameHeight,
       world: world,
     );
-    cam.viewfinder.anchor = Anchor.topLeft;
+    cam.viewfinder.anchor = Anchor.center;
     await addAll([cam, world]);
 
+    final player = world.firstChild<MainHero>()!;
+    cam.follow(player);
     return super.onLoad();
   }
 
   static const _levels = [
     'escape-room-01.tmx',
-    'escape-room-02.tmx',
-    'escape-room-03.tmx',
-    'escape-room-04.tmx',
-    'escape-room-05.tmx',
-    'escape-room-06.tmx',
-    'escape-room-07.tmx',
-    'escape-room-08.tmx',
-    'escape-room-09.tmx',
-    'escape-room-10.tmx',
+    // 'escape-room-02.tmx',
+    // 'escape-room-03.tmx',
+    // 'escape-room-04.tmx',
+    // 'escape-room-05.tmx',
+    // 'escape-room-06.tmx',
+    // 'escape-room-07.tmx',
+    // 'escape-room-08.tmx',
+    // 'escape-room-09.tmx',
+    // 'escape-room-10.tmx',
   ];
 }

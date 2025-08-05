@@ -5,13 +5,14 @@ import 'package:my_game/game/components/hero/hero.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 import 'package:my_game/game/dungeon_game.dart';
 
-class NewTapMovingBehavior extends Behavior<Hero> with HasGameRef<DungeonGame> {
+class NewTapMovingBehavior extends Behavior<MainHero>
+    with HasGameRef<DungeonGame> {
   double _horizontalMovement = 0;
   double _verticalMovement = 0;
   final Vector2 _velocity = Vector2.zero();
   final _inputVector = Vector2.zero();
   final _destination = Vector2.zero();
-  Vector2 testDes = Vector2.zero();
+  Vector2 tapDes = Vector2.zero();
   final _nextPosition = Vector2.zero();
   // final PlayerCollider collider;
 
@@ -32,7 +33,7 @@ class NewTapMovingBehavior extends Behavior<Hero> with HasGameRef<DungeonGame> {
     _horizontalMovement += isRightKeyPressed ? 1 : 0;
     _verticalMovement += isDownKeyPressed ? 1 : 0;
     _verticalMovement += isUpKeyPressed ? -1 : 0;
-    testDes = tapPosition;
+    tapDes = tapPosition;
 
     _inputVector
       ..setValues(_horizontalMovement, _verticalMovement)
@@ -60,7 +61,9 @@ class NewTapMovingBehavior extends Behavior<Hero> with HasGameRef<DungeonGame> {
     // to move directly to _destination this frame.
     // collider.calculateNextPosition(_destination, _nextPosition);
 
-    parent.position.setFrom(testDes);
+    if (tapDes != Vector2.zero()) {
+      parent.position.setFrom(tapDes);
+    }
   }
 
   void _updatePlayerOrientation({

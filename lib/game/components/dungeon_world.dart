@@ -3,16 +3,14 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:my_game/game/components/hero/hero.dart';
 import 'package:my_game/game/configuration/configuration.dart';
+import 'package:my_game/game/components/hero/hero.dart';
 import 'package:my_game/game/dungeon_map.dart';
 
 class DungeonWorld extends World with TapCallbacks {
-  DungeonWorld({required this.mapFileName, this.continuePropagation = true})
-    : super(children: []);
+  DungeonWorld({required this.mapFileName}) : super(children: []);
   String mapFileName;
 
-  final bool continuePropagation;
   late DungeonMap map;
   late TiledComponent mapLevel;
   late DungeonMap background;
@@ -30,8 +28,6 @@ class DungeonWorld extends World with TapCallbacks {
               layer.properties.byName[customTypeProp]?.value == furnitureType,
         )
         .map((layer) => layer.name);
-
-    print(furnitureLayerNames);
 
     final backgroundTask = DungeonMap.load(
       filename: mapFileName,
@@ -89,6 +85,8 @@ class DungeonWorld extends World with TapCallbacks {
 
       add(furnitureProp);
     }
+
+    add(mapLevel);
     _loadSpawnPoints();
 
     return super.onLoad();
@@ -102,7 +100,9 @@ class DungeonWorld extends World with TapCallbacks {
       for (final spawnPoint in spawnPointsLayer.objects) {
         switch (spawnPoint.class_) {
           case spawnPointPlayerClass:
-            final position = Vector2(spawnPoint.x, spawnPoint.y);
+            final position = Vector2(spawnPoint.x, spawnPoint.y) * 2;
+
+            // final position = Vector2(217, 58);
             // final colliderPosition =
             //     position + Vector2(0, spawnPoint.height + spawnPoint.width);
             // final colliderSize = Vector2.all(spawnPoint.width);
@@ -112,11 +112,11 @@ class DungeonWorld extends World with TapCallbacks {
             //   position: colliderPosition,
             //   hitbox: hitbox,
             // );
-            final player = Hero(
+            final player = MainHero(
               character: 'conference_woman',
               position: position,
-              continuePropagation: continuePropagation,
-              size: Vector2(spawnPoint.width, spawnPoint.height),
+              // size: Vector2(spawnPoint.width, spawnPoint.height),
+              size: Vector2.all(32),
             );
             // add(collider);
             add(player);
@@ -129,9 +129,8 @@ class DungeonWorld extends World with TapCallbacks {
 
   @override
   void onTapDown(TapDownEvent event) {
-    final hero = descendants().whereType<Hero>().firstOrNull;
+    final hero = descendants().whereType<MainHero>().firstOrNull;
     if (hero != null) {
-      // Propagate tap to hero
       hero.handleWorldTap(event.localPosition);
     }
   }

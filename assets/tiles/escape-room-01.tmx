@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="57" nextobjectid="83">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="57" nextobjectid="83">
  <tileset firstgid="1" source="room_builder.tsx"/>
  <tileset firstgid="225" source="office_items.tsx"/>
  <group id="27" name="background">
   <properties>
-   <property name="type" propertytype="entity_type" value="background"/>
+   <property name="type" value="background"/>
   </properties>
   <layer id="1" name="backdrop" width="40" height="23" locked="1">
    <data encoding="csv">
@@ -117,7 +117,7 @@
  </group>
  <group id="53" name="bottom_wall">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="56" name="wall_back" width="40" height="23">
    <data encoding="csv">
@@ -179,7 +179,7 @@
  </group>
  <group id="42" name="divider_wall_2">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="44" name="wall" width="40" height="23">
    <data encoding="csv">
@@ -241,7 +241,7 @@
  </group>
  <group id="50" name="wall">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="52" name="wall" width="40" height="23">
    <data encoding="csv">
@@ -276,7 +276,7 @@
  </group>
  <group id="29" name="divider_wall_1">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="31" name="wall" width="40" height="23">
    <data encoding="csv">
@@ -338,7 +338,7 @@
  </group>
  <group id="20" name="desk_1" locked="1">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="25" name="chairs_back" width="40" height="23">
    <data encoding="csv">
@@ -481,7 +481,7 @@
  </group>
  <group id="13" name="desk_2" locked="1">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="17" name="chairs_back" width="40" height="23">
    <data encoding="csv">
@@ -624,7 +624,7 @@
  </group>
  <group id="38" name="desk_3">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="41" name="desks" width="40" height="23">
    <data encoding="csv">
@@ -686,7 +686,7 @@
  </group>
  <group id="46" name="table_2">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="48" name="table" width="40" height="23">
    <data encoding="csv">
@@ -748,7 +748,7 @@
  </group>
  <group id="33" name="table_1">
   <properties>
-   <property name="type" propertytype="entity_type" value="furniture"/>
+   <property name="type" value="furniture"/>
   </properties>
   <layer id="35" name="chairs_back" width="40" height="23">
    <data encoding="csv">
@@ -837,7 +837,7 @@
   </objectgroup>
  </group>
  <objectgroup id="10" name="Spawnpoints" locked="1">
-  <object id="1" name="Player" type="Player" x="23" y="277" width="16" height="32"/>
+  <object id="1" name="Player" type="Player" x="31.6663" y="290.333" width="15.3333" height="24.6667"/>
  </objectgroup>
  <objectgroup id="12" name="Puzzles">
   <object id="10" name="Printer" x="576" y="32" width="16" height="16">
