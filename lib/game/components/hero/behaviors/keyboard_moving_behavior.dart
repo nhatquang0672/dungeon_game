@@ -5,7 +5,7 @@ import 'package:my_game/game/components/hero/hero.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 import 'package:my_game/game/dungeon_game.dart';
 
-class KeyboardMovingBehavior extends Behavior<Hero>
+class KeyboardMovingBehavior extends Behavior<MainHero>
     with KeyboardHandler, HasGameRef<DungeonGame> {
   // KeyboardMovingBehavior({required this.collider});
 

@@ -26,6 +26,7 @@ dependencies:
   statistics_repository:
     path: packages/statistics_repository
   flame_tiled: ^3.0.5
+  quiver: ^3.2.2
 
 dev_dependencies:
   bloc_test: ^10.0.0

@@ -12,7 +12,7 @@ class NewTapMovingBehavior extends Behavior<MainHero>
   final Vector2 _velocity = Vector2.zero();
   final _inputVector = Vector2.zero();
   final _destination = Vector2.zero();
-  Vector2 tapDes = Vector2.zero();
+  Vector2? tapDes;
   final _nextPosition = Vector2.zero();
   // final PlayerCollider collider;
 
@@ -43,7 +43,7 @@ class NewTapMovingBehavior extends Behavior<MainHero>
   @override
   void update(double dt) {
     super.update(dt);
-    if (!game.overlays.activeOverlays.isNotEmpty) {
+    if (!game.overlays.activeOverlays.isNotEmpty && tapDes != null) {
       _updatePlayerMovement(dt);
       _updateIfIdle();
     }
@@ -61,9 +61,7 @@ class NewTapMovingBehavior extends Behavior<MainHero>
     // to move directly to _destination this frame.
     // collider.calculateNextPosition(_destination, _nextPosition);
 
-    if (tapDes != Vector2.zero()) {
-      parent.position.setFrom(tapDes);
-    }
+    parent.position.setFrom(tapDes ?? Vector2.zero());
   }
 
   void _updatePlayerOrientation({
