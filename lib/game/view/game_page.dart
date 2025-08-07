@@ -3,6 +3,7 @@ import 'package:flame/game.dart' hide Route;
 import 'package:flame_audio/bgm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_game/colonist_game/colonist_game.dart';
 import 'package:my_game/game/continue_propgating.dart';
 import 'package:my_game/game/dungeon_game.dart';
 import 'package:my_game/game/game.dart';
@@ -65,7 +66,7 @@ class _GameViewState extends State<GameView> {
       context,
     ).textTheme.bodySmall!.copyWith(color: Colors.white, fontSize: 4);
 
-    _game ??= widget.game ?? DungeonGame();
+    _game ??= widget.game ?? ColonistGame();
     // MyGame(
     //   l10n: context.l10n,
     //   effectPlayer: context.read<AudioCubit>().effectPlayer,

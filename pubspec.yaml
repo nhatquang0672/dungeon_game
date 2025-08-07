@@ -43,6 +43,7 @@ flutter:
   assets:
     - assets/audio/
     - assets/images/unicorn_animation.png
+    - assets/images/ant_walk.png
     - assets/images/modern_office/
     - assets/images/characters/
     - assets/licenses/poppins/

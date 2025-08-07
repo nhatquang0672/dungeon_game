@@ -4,6 +4,8 @@ import 'package:flame/components.dart';
 
 const gameWidth = 640.0;
 const gameHeight = 360.0;
+const mapWidth = 10;
+const mapHeight = 10;
 const gameBackgroundColor = Color(0xff3A3A50);
 const playerStepTimeAnimation = 0.3;
 final playerSpriteSheetSize = Vector2(32, 48);
@@ -24,4 +26,5 @@ const escapeRoomTicks = 120;
 const escapeRoomMaxWrongAnswersAllowed = 3;
 const escapeRoomNumberOfPuzzles = 3;
 final Vector2 tileSize = Vector2.all(32);
+const double dTileSize = 32;
 const escapeRoomNumberOfHintsAllowed = 2;
