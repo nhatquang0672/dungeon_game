@@ -2,23 +2,33 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
+import 'package:my_game/colonist_game/brains/path_finder.dart';
+import 'package:my_game/colonist_game/brains/worker_brain.dart';
 import 'package:my_game/colonist_game/colonist_game.dart';
 import 'package:my_game/colonist_game/standard/int_vector2.dart';
-import 'package:my_game/colonist_game/standard/range_extension.dart';
 import 'package:my_game/colonist_game/terrain/grass.dart';
 import 'package:my_game/colonist_game/terrain/terrain.dart';
 import 'package:my_game/colonist_game/unit/worker.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 
-class GameMap extends Component with HasGameReference<ColonistGame> {
-  static const totalPositions = mapWidth * mapHeight;
-  static final int workerSpread = (0.1 * totalPositions).toInt();
-
+class GameMap extends Component
+    with HasGameReference<ColonistGame>, TapCallbacks {
   static const double workerMinSpeed = 25;
   static const double workerMaxSpeed = 75;
 
-  final mapPositions = List.generate(totalPositions, (index) => index)
-    ..shuffle();
+  final Map<IntVector2, Terrain> _terrain = {};
+
+  void addTerrain(IntVector2 position, Terrain terrain) {
+    _terrain[position] = terrain;
+    add(
+      terrain
+        ..x = position.x * dTileSize
+        ..y = position.y * dTileSize
+        ..width = dTileSize
+        ..height = dTileSize,
+    );
+  }
 
   @override
   FutureOr<void> onLoad() {
@@ -28,30 +38,45 @@ class GameMap extends Component with HasGameReference<ColonistGame> {
       }
     }
 
-    for (final _ in 0.to(workerSpread))
-      add(
-        Worker(
-          mapPositions[0] ~/ mapWidth,
-          mapPositions.removeAt(0) % mapHeight,
-          speed:
-              Random().nextDouble() * (workerMaxSpeed - workerMinSpeed) +
-              workerMinSpeed,
-        ),
-      );
-
-    // game.camera.follow(worker);
+    worker = Worker(
+      mapWidth / 2,
+      mapHeight / 2,
+      speed:
+          Random().nextDouble() * (workerMaxSpeed - workerMinSpeed) +
+          workerMinSpeed,
+    );
+    add(worker);
   }
 
-  final Map<IntVector2, Terrain> _terrains = {};
+  late final Worker worker;
 
-  void addTerrain(IntVector2 position, Terrain terrain) {
-    _terrains[position] = terrain;
-    add(
-      terrain
-        ..x = position.x * dTileSize
-        ..y = position.y * dTileSize
-        ..width = dTileSize
-        ..height = dTileSize,
-    );
+  @override
+  void onTapDown(TapDownEvent event) {
+    print('game tap: ' + event.toString());
+    final brain = game.descendants().whereType<WorkerBrain>().firstOrNull;
+    if (brain != null) {
+      final worldPosition = game.camera.globalToLocal(
+        event.canvasPosition,
+      );
+      print('do we have brain ?');
+      brain.calculateTasks(worldPosition);
+    }
+  }
+
+  PathFinderData get pathFinderData => PathFinderData.fromWorld(
+    terrain: _terrain,
+    worldObjects: [],
+  );
+
+  @override
+  bool containsLocalPoint(Vector2 point) {
+    return (point.x >= 0) &&
+        (point.y >= 0) &&
+        (point.x < mapWidth * dTileSize) &&
+        (point.y < mapHeight * dTileSize);
+  }
+
+  Terrain tileAtPosition(int x, int y) {
+    return _terrain[IntVector2(x, y)]!;
   }
 }

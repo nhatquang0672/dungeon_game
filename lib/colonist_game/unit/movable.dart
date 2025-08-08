@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:my_game/colonist_game/colonist_game.dart';
+import 'package:my_game/colonist_game/standard/int_vector2.dart';
 
 enum MoveDirection {
   idle(isLeft: false), // 0
@@ -46,47 +49,47 @@ mixin Movable on PositionComponent, HasGameReference<ColonistGame> {
     return super.onLoad();
   }
 
-  // PathLine? pathLine;
-  //
-  // void _removePathLine() {
-  //   pathLine?.getGone();
-  // }
+  PathLine? pathLine;
 
-  // void _walkAlongPath(List<Vector2> path) {
-  //   if (path.isEmpty) {
-  //     setCurrentDirection(MoveDirection.idle);
-  //     _removePathLine();
-  //     // Reached last position, make available again
-  //     reachedDestination();
-  //     return;
-  //   }
-  //
-  //   final nextPoint = path.removeAt(0);
-  //
-  //   final normalizedDirection = (nextPoint - position).normalized();
-  //   normalizedDirection.round();
-  //   setCurrentDirection(directions[normalizedDirection] ?? MoveDirection.idle);
-  //
-  //   add(
-  //     MoveToEffect(
-  //       nextPoint,
-  //       EffectController(speed: speed),
-  //       onComplete: () => _walkAlongPath(path),
-  //     ),
-  //   );
-  // }
+  void _removePathLine() {
+    pathLine?.getGone();
+  }
 
-  // void walkPath(List<IntVector2> path) {
-  //   final absolutePath = path.map((e) {
-  //     return game.tileAtPosition(e.x, e.y).positionOfAnchor(Anchor.center);
-  //   }).toList();
-  //
-  //   _walkAlongPath(absolutePath);
-  //
-  //   if (path.length > 2) {
-  //     game.world.add(pathLine = PathLine(absolutePath));
-  //   }
-  // }
+  void _walkAlongPath(List<Vector2> path) {
+    if (path.isEmpty) {
+      setCurrentDirection(MoveDirection.idle);
+      _removePathLine();
+      // Reached last position, make available again
+      reachedDestination();
+      return;
+    }
+
+    final nextPoint = path.removeAt(0);
+
+    final normalizedDirection = (nextPoint - position).normalized();
+    normalizedDirection.round();
+    setCurrentDirection(directions[normalizedDirection] ?? MoveDirection.idle);
+
+    add(
+      MoveToEffect(
+        nextPoint,
+        EffectController(speed: speed),
+        onComplete: () => _walkAlongPath(path),
+      ),
+    );
+  }
+
+  void walkPath(List<IntVector2> path) {
+    final absolutePath = path.map((e) {
+      return game.tileAtPosition(e.x, e.y).positionOfAnchor(Anchor.center);
+    }).toList();
+
+    _walkAlongPath(absolutePath);
+
+    if (path.length > 2) {
+      game.world.add(pathLine = PathLine(absolutePath));
+    }
+  }
 
   void setCurrentDirection(MoveDirection direction);
 
@@ -101,4 +104,30 @@ mixin Movable on PositionComponent, HasGameReference<ColonistGame> {
     Vector2(-1, 0): MoveDirection.left,
     Vector2(-1, -1): MoveDirection.upLeft,
   };
+}
+
+class PathLine extends ShapeComponent {
+  final Path path;
+
+  PathLine(List<Vector2> path) : path = _toPath(path) {
+    paint = Paint()
+      ..color = const Color(0x30ffffff)
+      ..style = PaintingStyle.stroke;
+  }
+
+  static Path _toPath(List<Vector2> points) {
+    return Path()..addPolygon(
+      points.map((p) => p.toOffset()).toList(growable: false),
+      false,
+    );
+  }
+
+  void getGone() {
+    parent?.remove(this);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    canvas.drawPath(path, paint);
+  }
 }

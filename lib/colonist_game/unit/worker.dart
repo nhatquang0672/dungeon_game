@@ -1,15 +1,14 @@
-import 'dart:async';
-
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:my_game/colonist_game/colonist_game.dart';
+import 'package:my_game/colonist_game/objects/colonist_object.dart';
 import 'package:my_game/colonist_game/standard/int_vector2.dart';
 import 'package:my_game/colonist_game/standard/pair.dart';
 import 'package:my_game/colonist_game/unit/movable.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 
 class Worker extends SpriteAnimationGroupComponent<MoveDirection>
-    with HasGameReference<ColonistGame>, Movable {
+    with HasGameReference<ColonistGame>, Movable, ColonistsObject {
   @override
   final double speed;
 
@@ -19,9 +18,6 @@ class Worker extends SpriteAnimationGroupComponent<MoveDirection>
     height = dTileSize;
     width = dTileSize;
     anchor = Anchor.center;
-    print('#####');
-    print(super.x);
-    print(super.y);
 
     final downRightAnimation = getSpriteAnimation(5);
     animations = {
@@ -56,7 +52,7 @@ class Worker extends SpriteAnimationGroupComponent<MoveDirection>
     );
   }
 
-  Pair<Vector2, List<IntVector2>>? _currentTask;
+  Pair<IntVector2, List<IntVector2>>? _currentTask;
 
   @override
   void reachedDestination() {
@@ -69,4 +65,13 @@ class Worker extends SpriteAnimationGroupComponent<MoveDirection>
   void setCurrentDirection(MoveDirection direction) {
     current = direction;
   }
+
+  void issueWork(IntVector2 des, List<IntVector2> path) {
+    print('!!!! issueWork');
+    walkPath(path);
+    _currentTask = Pair(des, path);
+  }
+
+  @override
+  IntVector2 get tileSize => const IntVector2(1, 1);
 }
