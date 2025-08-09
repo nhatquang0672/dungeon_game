@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 
-const gameWidth = 640.0;
-const gameHeight = 360.0;
+const gameWidth = 1280.0;
+const gameHeight = 720.0;
 const mapWidth = 10;
 const mapHeight = 10;
 const gameBackgroundColor = Color(0xff3A3A50);

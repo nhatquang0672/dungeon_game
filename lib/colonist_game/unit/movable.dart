@@ -80,9 +80,16 @@ mixin Movable on PositionComponent, HasGameReference<ColonistGame> {
   }
 
   void walkPath(List<IntVector2> path) {
+    print('### walk path: ' + path.toString());
+    if (game == null) {
+      print('game == null');
+    } else {
+      print('game != null');
+    }
     final absolutePath = path.map((e) {
       return game.tileAtPosition(e.x, e.y).positionOfAnchor(Anchor.center);
     }).toList();
+    print('## oohhh');
 
     _walkAlongPath(absolutePath);
 

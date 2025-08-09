@@ -3,12 +3,14 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:my_game/colonist_game/brains/hero_brain.dart';
 import 'package:my_game/colonist_game/brains/path_finder.dart';
 import 'package:my_game/colonist_game/brains/worker_brain.dart';
 import 'package:my_game/colonist_game/colonist_game.dart';
 import 'package:my_game/colonist_game/standard/int_vector2.dart';
 import 'package:my_game/colonist_game/terrain/grass.dart';
 import 'package:my_game/colonist_game/terrain/terrain.dart';
+import 'package:my_game/colonist_game/unit/shero.dart';
 import 'package:my_game/colonist_game/unit/worker.dart';
 import 'package:my_game/game/configuration/configuration.dart';
 
@@ -46,19 +48,21 @@ class GameMap extends Component
           workerMinSpeed,
     );
     add(worker);
+    sHero = SHero(2, 2);
+    add(SHero(2, 2));
   }
 
   late final Worker worker;
+  late final SHero sHero;
 
   @override
   void onTapDown(TapDownEvent event) {
     print('game tap: ' + event.toString());
-    final brain = game.descendants().whereType<WorkerBrain>().firstOrNull;
+    final brain = game.descendants().whereType<HeroBrain>().firstOrNull;
     if (brain != null) {
       final worldPosition = game.camera.globalToLocal(
         event.canvasPosition,
       );
-      print('do we have brain ?');
       brain.calculateTasks(worldPosition);
     }
   }
