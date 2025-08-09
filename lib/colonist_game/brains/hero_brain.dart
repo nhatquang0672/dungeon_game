@@ -26,7 +26,6 @@ class HeroBrain extends Component with HasGameReference<ColonistGame> {
   }
 
   Future<void> _assignTasks() async {
-    print('try to assign task');
     if (_queuedTasks.isEmpty || !game.sHero.isIdle) {
       return;
     }
@@ -36,7 +35,6 @@ class HeroBrain extends Component with HasGameReference<ColonistGame> {
       firstDess.y ~/ dTileSize,
     );
 
-    print('have task !!!! ' + firstDes.toString());
     try {
       final calculateWorkData = _CalculateWorkData(
         idleWorkerPositions: [

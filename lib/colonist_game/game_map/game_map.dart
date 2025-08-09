@@ -49,7 +49,7 @@ class GameMap extends Component
     );
     add(worker);
     sHero = SHero(2, 2);
-    add(SHero(2, 2));
+    add(sHero);
   }
 
   late final Worker worker;
