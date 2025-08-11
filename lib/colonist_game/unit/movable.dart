@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -94,25 +95,6 @@ mixin Movable on PositionComponent, HasGameReference<ColonistGame> {
         ),
       ),
     );
-    // add(
-    //   MoveToEffect(
-    //     nextPoint,
-    //     EffectController(
-    //       speed: speed,
-    //     ),
-    //     onComplete: () => _walkAlongPath(path),
-    //   ),
-    // );
-    // add(
-    //   MoveByEffect(
-    //     Vector2(0, -20), // Move up by 20px
-    //     EffectController(
-    //       duration: 0.25,
-    //       reverseDuration: 0.25, // Come back down
-    //       curve: Curves.easeOutQuad,
-    //     ),
-    //   ),
-    // );
   }
 
   void walkPath(List<IntVector2> path) {
@@ -179,4 +161,31 @@ class JumpCurve extends Curve {
     return -4 * height * t * (t - 1) + t;
     // return -4 * peakHeight * t * (t - 1);
   }
+}
+
+class WalkBounceEffect extends ComponentEffect<PositionComponent> {
+  final double height;
+  final double stepDuration;
+  double? baseY;
+
+  WalkBounceEffect({
+    required this.height,
+    required this.stepDuration,
+    EffectController? controller,
+  }) : super(controller ?? EffectController(duration: stepDuration));
+
+  @override
+  Future<void> onMount() async {
+    super.onMount();
+    baseY = target!.position.y;
+  }
+
+  @override
+  void apply(double progress) {
+    final yOffset = -height * sin(progress * pi);
+    target!.position.y = baseY! + yOffset;
+  }
+
+  @override
+  bool get isInfinite => false;
 }
