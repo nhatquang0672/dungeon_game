@@ -14,7 +14,7 @@ Iterable<IntVector2>? findPath({
 }) {
   // I know, I know, this is a thread sleep... But it's emulating an expensive
   // path finding calculation
-  sleep(const Duration(milliseconds: 20));
+  // sleep(const Duration(milliseconds: 20));
   return _findPathAStar(
     start: start,
     destination: destination,

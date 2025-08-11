@@ -69,27 +69,56 @@ mixin Movable on PositionComponent, HasGameReference<ColonistGame> {
     final normalizedDirection = (nextPoint - position).normalized();
     normalizedDirection.round();
     setCurrentDirection(directions[normalizedDirection] ?? MoveDirection.idle);
+    final moveDuration =
+        (nextPoint - position).length / speed; // Same as MoveToEffect
 
     add(
       MoveToEffect(
         nextPoint,
-        EffectController(speed: speed),
+        EffectController(
+          duration: moveDuration,
+          curve: Curves.linear,
+        ),
         onComplete: () => _walkAlongPath(path),
       ),
     );
+
+    add(
+      MoveByEffect(
+        Vector2(0, -20),
+        EffectController(
+          duration: moveDuration / 2,
+          reverseDuration: moveDuration / 2,
+          curve: Curves.easeOut,
+          reverseCurve: Curves.easeIn,
+        ),
+      ),
+    );
+    // add(
+    //   MoveToEffect(
+    //     nextPoint,
+    //     EffectController(
+    //       speed: speed,
+    //     ),
+    //     onComplete: () => _walkAlongPath(path),
+    //   ),
+    // );
+    // add(
+    //   MoveByEffect(
+    //     Vector2(0, -20), // Move up by 20px
+    //     EffectController(
+    //       duration: 0.25,
+    //       reverseDuration: 0.25, // Come back down
+    //       curve: Curves.easeOutQuad,
+    //     ),
+    //   ),
+    // );
   }
 
   void walkPath(List<IntVector2> path) {
-    print('### walk path: ' + path.toString());
-    if (game == null) {
-      print('game == null');
-    } else {
-      print('game != null');
-    }
     final absolutePath = path.map((e) {
       return game.tileAtPosition(e.x, e.y).positionOfAnchor(Anchor.center);
     }).toList();
-    print('## oohhh');
 
     _walkAlongPath(absolutePath);
 
@@ -136,5 +165,18 @@ class PathLine extends ShapeComponent {
   @override
   void render(Canvas canvas) {
     canvas.drawPath(path, paint);
+  }
+}
+
+class JumpCurve extends Curve {
+  final double height;
+
+  JumpCurve(this.height);
+
+  @override
+  double transform(double t) {
+    // This makes t go up and then down — a simple parabola
+    return -4 * height * t * (t - 1) + t;
+    // return -4 * peakHeight * t * (t - 1);
   }
 }
