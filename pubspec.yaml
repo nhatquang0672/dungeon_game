@@ -25,6 +25,8 @@ dependencies:
     path: packages/game_repository
   statistics_repository:
     path: packages/statistics_repository
+  malison:
+    path: packages/malison
   flame_tiled: ^3.0.5
   quiver: ^3.2.2
   collection: ^1.19.1

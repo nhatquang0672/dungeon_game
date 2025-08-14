@@ -412,6 +412,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  malison:
+    dependency: "direct main"
+    description:
+      path: "packages/malison"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   matcher:
     dependency: transitive
     description:
@@ -580,6 +587,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.3"
+  piecemeal:
+    dependency: transitive
+    description:
+      name: piecemeal
+      sha256: "1c57c8f3a4955065d5baf32d2b4d6d6d26f40018abee162932ed8cd230d6b6fc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   platform:
     dependency: transitive
     description:
