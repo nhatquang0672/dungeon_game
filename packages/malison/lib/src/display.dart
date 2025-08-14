@@ -1,3 +1,4 @@
+import 'package:malison/malison.dart';
 import 'package:piecemeal/piecemeal.dart';
 
 import 'glyph.dart';
@@ -49,13 +50,24 @@ class Display {
       _changedGlyphs = Array2D(width, height, Glyph.clear);
 
   /// Sets the cell at [x], [y], to [glyph].
+  void testGylph(int x, int y) {
+    var old = _glyphs.get(x, y);
+    var nnew =
+        _changedGlyphs.get(x, y) ??
+        Glyph.fromCharCode(CharCode.seven, Color.gold, Color.gray);
+    print('old ' + old.char.toString() + '  new: ' + nnew.char.toString());
+  }
+
   void setGlyph(int x, int y, Glyph glyph) {
     if (x < 0) return;
     if (x >= width) return;
     if (y < 0) return;
     if (y >= height) return;
 
-    if (_glyphs.get(x, y) != glyph) {
+    // if (_glyphs.get(x, y) != glyph) {
+    if (_glyphs.get(x, y) != glyph ||
+        (_glyphs.get(x, y) != _changedGlyphs.get(x, y) &&
+            _changedGlyphs.get(x, y) != null)) {
       _changedGlyphs.set(x, y, glyph);
     } else {
       _changedGlyphs.set(x, y, null);
@@ -68,6 +80,8 @@ class Display {
     for (var y = 0; y < height; y++) {
       for (var x = 0; x < width; x++) {
         var glyph = _changedGlyphs.get(x, y);
+
+        // var glyph = _changedGlyphs.get(x, y) ?? _glyphs.get(x, y);
 
         // Only draw glyphs that are different since the last call.
         if (glyph == null) continue;
