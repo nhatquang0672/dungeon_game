@@ -25,7 +25,7 @@ dependencies:
     path: packages/game_repository
   statistics_repository:
     path: packages/statistics_repository
-  flame_tiled: ^3.0.5
+  flame_tiled: ^3.0.7
   quiver: ^3.2.2
   collection: ^1.19.1
 
